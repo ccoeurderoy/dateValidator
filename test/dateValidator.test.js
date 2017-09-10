@@ -177,6 +177,7 @@ describe('The DateValidator', function() {
       let country = 'FR';
       let beginingTime = '8:00';
       let endingTime = '19:00';
+      // 1st of january if a public holiday 
       let date = new Date('2017-01-01 12:00');
       let nextDate = new Date('2017-01-02 8:00');
       let dateValidator = new DateValidator(true, true, beginingTime, endingTime, country);
@@ -205,6 +206,16 @@ describe('The DateValidator', function() {
       should(()=> {
         dateValidator.nextValidDate('invalidDate');
       }).throw('INVALID_PARAMETERS');
+    });
+
+    it('should return the next valid date when it\'s after', function() {
+      let country = 'FR';
+      let beginingTime = '8:00';
+      let endingTime = '19:00';
+      let date = new Date('2017-01-02 22:00');
+      let nextDate = new Date('2017-01-03 8:00');
+      let dateValidator = new DateValidator(true, true, beginingTime, endingTime, country);
+      should(moment(dateValidator.nextValidDate(date)).isSame(moment(nextDate))).eql(true);
     });
   });
 

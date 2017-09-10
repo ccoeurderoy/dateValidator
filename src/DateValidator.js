@@ -85,21 +85,29 @@ class DateValidator {
       return date;
     }
 
-    let hours = moment(this.beginingTime, 'HH:mm').hours();
-    let minutes = moment(this.beginingTime, 'HH:mm').minutes();
-
-    if (moment(date, 'HH:mm').isBefore(moment(this.beginingTime, 'HH:mm'))) {
-      date = moment(date).hours(hours).format();
-      date = moment(date).minutes(minutes).format();
+    const hoursOfStart = moment(this.beginingTime, 'HH:mm').hours();
+    const minutesOfStart = moment(this.beginingTime, 'HH:mm').minutes();
+    const hoursOfEnd = moment(this.endingTime, 'HH:mm').hours();
+    const minutesOfEnd = moment(this.endingTime, 'HH:mm').minutes();
+    const startOfLimit = moment(date).hours(hoursOfStart).minutes(minutesOfStart);
+    const endOfLimit = moment(date).hours(hoursOfEnd).minutes(minutesOfEnd);
+    // If the date is after the limit, add a day
+    if (moment(date, 'HH:mm').isAfter(endOfLimit)) {
+      date = moment(date).add(1, 'days');
     }
 
+    if (moment(date, 'HH:mm').isBefore(startOfLimit) || (moment(date, 'HH:mm').isAfter(endOfLimit))) {
+      date = moment(date).hours(hoursOfStart).format();
+      date = moment(date).minutes(minutesOfStart).format();
+    }
+
+    // If it's still not valid (holidays maybe),
+    // Add a day
     while (!this.isValidDate(date)) {
       date = moment(date).add(1, 'days').format();
     }
-
-
-    date = moment(date).hours(hours).format();
-    date = moment(date).minutes(minutes).format();
+    date = moment(date).hours(hoursOfStart).format();
+    date = moment(date).minutes(minutesOfStart).format();
 
     return date;
   }
