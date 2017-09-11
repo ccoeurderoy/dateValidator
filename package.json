@@ -6,6 +6,7 @@
     "test": "./node_modules/.bin/_mocha",
     "lint": "./node_modules/.bin/eslint ./src/"
   },
+  "main": "src/DateValidator.js",
   "dependencies": {
     "date-holidays": "^1.0.1",
     "global": "^4.3.2",
