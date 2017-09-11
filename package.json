@@ -1,6 +1,6 @@
 {
   "name": "holidays",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Validation of date, taking account of vacations or week end.",
   "scripts": {
     "test": "./node_modules/.bin/_mocha",
