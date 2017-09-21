@@ -97,17 +97,17 @@ class DateValidator {
     }
 
     if (moment(date, 'HH:mm').isBefore(startOfLimit) || (moment(date, 'HH:mm').isAfter(endOfLimit))) {
-      date = moment(date).hours(hoursOfStart).format();
-      date = moment(date).minutes(minutesOfStart).format();
+      date = moment(date).hours(hoursOfStart).toDate();
+      date = moment(date).minutes(minutesOfStart).toDate();
     }
 
     // If it's still not valid (holidays maybe),
     // Add a day
     while (!this.isValidDate(date)) {
-      date = moment(date).add(1, 'days').format();
+      date = moment(date).add(1, 'days').toDate();
     }
-    date = moment(date).hours(hoursOfStart).format();
-    date = moment(date).minutes(minutesOfStart).format();
+    date = moment(date).hours(hoursOfStart).toDate();
+    date = moment(date).minutes(minutesOfStart).toDate();
 
     return date;
   }
